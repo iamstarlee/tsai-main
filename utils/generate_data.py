@@ -4,7 +4,7 @@ import sys
 def generate_data():
 
     # Define the path to your text file
-    input_file_path = 'raw_data/test_dataset_2.txt'
+    input_file_path = 'raw_data/train_dataset_3.txt'
 
     # Read the file and parse the data into a numpy array
     data = np.loadtxt(input_file_path)
@@ -57,17 +57,17 @@ def generate_data():
                                                                         data[i15]
                                                                     ]
                                                                     combinations.append(combination)
-                                                                    if(numbers == 2000):
+                                                                    if(numbers == 10000):
                                                                         # Convert combinations to a numpy array
                                                                         combinations = np.array(combinations)
 
                                                                         # Define the path to save the npy file
-                                                                        output_file_path = 'raw_data/test_2000_2.npy'
+                                                                        output_file_path = 'raw_data/train_10000_3.npy'
 
                                                                         # Save the selected combinations to a npy file
                                                                         np.save(output_file_path, combinations)
 
-                                                                        print(f"Top 2000 combinations successfully saved to '{output_file_path}'")
+                                                                        print(f"Top 10000 combinations successfully saved to '{output_file_path}'")
                                                                         sys.exit()
 
 def generate_labels(n = 1):
@@ -102,4 +102,4 @@ def generate_full_labels():
 
 
 if __name__ == '__main__':
-    generate_full_labels()
+    generate_data()

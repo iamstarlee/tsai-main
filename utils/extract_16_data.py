@@ -2,6 +2,19 @@ import numpy as np
 import os
 import re
 
+# selection from [3,6,10,11,12,13,15,17,21,23,24,26,28,29,32,35]
+def preprocess_file():
+    file_path = "raw_data/dataset/test_dataset_3.txt"
+    with open(file_path, 'r') as file:
+        content = file.read()
+    
+    content = content.replace(',', '')
+
+    with open(file_path, 'w') as file:
+        file.write(content)
+    print("All commas have been successfully removed.")
+
+
 def extract_floats(text):
     # 正则表达式模式，用于匹配浮点数
     float_pattern = r'[-+]?\d*\.\d+|\d+'
@@ -27,19 +40,23 @@ def extract_from_files():
             with open("/home/whoami/Documents/Hanvon/12种香型白酒/12-2轮复筛-2/20240516/"+file_name, 'r') as f:
                 lines = f.readlines()
                 for line in lines:
-                    if "A1\t" in line or "B1\t" in line or "C1\t" in line or "D1\t" in line: 
-                        all_data += line + "\n"
+                    if "A3\t" in line or "B3\t" in line or "C3\t" in line or "D3\t" in line: 
+                        str2data = extract_floats(line)[1:]
+                        all_data += str(str2data)[1:len(str(str2data))-1] + "\n"
+                        
+                        
         if(i*2 in sensors_list):
             print(f"This is {i*2}")
             with open("/home/whoami/Documents/Hanvon/12种香型白酒/12-2轮复筛-2/20240516/"+file_name, 'r') as f:
                 lines = f.readlines()
                 for line in lines:
-                    if "E1\t" in line or "F1\t" in line or "G1\t" in line or "H1\t" in line: 
-                        all_data += line + "\n"
+                    if "E3\t" in line or "F3\t" in line or "G3\t" in line or "H3\t" in line: 
+                        str2data = extract_floats(line)[1:]
+                        all_data += str(str2data)[1:len(str(str2data))-1] + "\n"
         
-
-    with open("raw_data/dataset/test.txt", 'w') as f:
+    
+    with open("raw_data/dataset/test_dataset_3.txt", 'w') as f:
         f.write(all_data)
 
 if __name__ == '__main__':
-    extract_from_files()
+    preprocess_file()
