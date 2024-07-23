@@ -4,7 +4,7 @@ import re
 
 # selection from [3,6,10,11,12,13,15,17,21,23,24,26,28,29,32,35]
 def preprocess_file():
-    file_path = "raw_data/train_dataset_3.txt"
+    file_path = "raw_data/test_dataset_3.txt"
     with open(file_path, 'r') as file:
         content = file.read()
     
@@ -34,10 +34,9 @@ def extract_from_files():
     all_data = ""
     # Get for second day
     for i in range(1,19):
-        file_name = f"05152024_12-2ci-{i}_n001.seq1"
-        #if(i*2 - 1 in sensors_list):
-        if(i == 1):
-            with open("/home/whoami/Documents/Hanvon/12种香型白酒/12-2轮复筛-1/20240515/"+file_name, 'r') as f:
+        file_name = f"05162024_12-3ci-{i}_n001.seq1"
+        if(i*2 - 1 in sensors_list):
+            with open("/home/whoami/Documents/Hanvon/12种香型白酒/12-2轮复筛-2/20240516/"+file_name, 'r') as f:
                 lines = f.readlines()
                 for line in lines:
                     if "A3\t" in line or "B3\t" in line or "C3\t" in line or "D3\t" in line: 
@@ -48,7 +47,7 @@ def extract_from_files():
                         
                         
         if(i*2 in sensors_list):
-            with open("/home/whoami/Documents/Hanvon/12种香型白酒/12-2轮复筛-1/20240515/"+file_name, 'r') as f:
+            with open("/home/whoami/Documents/Hanvon/12种香型白酒/12-2轮复筛-2/20240516/"+file_name, 'r') as f:
                 lines = f.readlines()
                 for line in lines:
                     if "E3\t" in line or "F3\t" in line or "G3\t" in line or "H3\t" in line: 
@@ -58,7 +57,7 @@ def extract_from_files():
                         all_data += str(str2data)[1:len(str(str2data))-1] + "\n"
         
     
-    with open("raw_data/dataset/train_dataset_3.txt", 'w') as f:
+    with open("raw_data/test_dataset_3.txt", 'w') as f:
         f.write(all_data)
 
 if __name__ == '__main__':
