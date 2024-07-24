@@ -19,7 +19,7 @@ def extract_floats(text):
 if __name__ == '__main__':
     # Define the paths to your text files
     x_file_path = 'raw_data/x.txt'
-    custom = True
+    custom = False
     
     if custom:
         y_file_path = 'raw_data/day2_dataset_1.txt'
@@ -42,11 +42,11 @@ if __name__ == '__main__':
         # Read the 16 sets of y-coordinates from the second file
         # y_coordinates = np.load(y_file_path)[99]
         y_coordinates = np.loadtxt(y_file_path)
-        print(f"y-axis shape is {y_coordinates.shape}")
+        print(f"y-axis shape is {y_coordinates.shape}, and x-axis shape is {x_coordinates.shape}")
         
 
     # Ensure that x_coordinates and y_coordinates have compatible shapes
-    assert np.array(y_coordinates).shape[0] == 16, "The second file must have 16 rows of y-coordinates."
+    # assert np.array(y_coordinates).shape[0] == 16, "The second file must have 16 rows of y-coordinates."
 
     # Plot the x and y coordinates
     plt.figure(figsize=(10, 6))

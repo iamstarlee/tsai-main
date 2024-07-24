@@ -31,34 +31,36 @@ def extract_floats(text):
 def extract_from_files():
     sensors_list = [3,6,10,11,12,13,15,17,21,23,24,26,28,29,32,35]
     
-    all_data = ""
-    # Get for second day
-    for i in range(1,19):
-        file_name = f"05162024_12-3ci-{i}_n001.seq1"
-        if(i*2 - 1 in sensors_list):
-            with open("/home/whoami/Documents/Hanvon/12种香型白酒/12-2轮复筛-2/20240516/"+file_name, 'r') as f:
-                lines = f.readlines()
-                for line in lines:
-                    if "A3\t" in line or "B3\t" in line or "C3\t" in line or "D3\t" in line: 
-                        str2data = extract_floats(line)
-                        str2data = [num for num in str2data if num > 9.0]# 去掉所有个位浮点数
-                        print(f"After Shape is {np.array(str2data).shape}")
-                        all_data += str(str2data)[1:len(str(str2data))-1] + "\n"
-                        
-                        
-        if(i*2 in sensors_list):
-            with open("/home/whoami/Documents/Hanvon/12种香型白酒/12-2轮复筛-2/20240516/"+file_name, 'r') as f:
-                lines = f.readlines()
-                for line in lines:
-                    if "E3\t" in line or "F3\t" in line or "G3\t" in line or "H3\t" in line: 
-                        str2data = extract_floats(line)
-                        str2data = [num for num in str2data if num > 9.0]# 去掉所有个位浮点数
-                        print(f"After Shape is {np.array(str2data).shape}")
-                        all_data += str(str2data)[1:len(str(str2data))-1] + "\n"
+    for j in range(1, 13):
+        all_data = ""
+        # Get for first day
+        for i in range(1,19):
+            file_name = f"05152024_12-2ci-{i}_n001.seq1"
+            if(i*2 - 1 in sensors_list):
+                with open("/home/whoami/Documents/Hanvon/12种香型白酒/12-2轮复筛-1/20240515/"+file_name, 'r') as f:
+                    lines = f.readlines()
+                    for line in lines:
+                        if f"A{j}\t" in line or f"B{j}\t" in line or f"C{j}\t" in line or f"D{j}\t" in line: 
+                            str2data = extract_floats(line)
+                            str2data = [num for num in str2data if num > 13.0]# 去掉所有个位浮点数
+                            assert np.array(str2data).shape[0] == 70, "The columns must be 70."
+                            all_data += str(str2data)[1:len(str(str2data))-1] + "\n"
+                            
+                            
+            if(i*2 in sensors_list):
+                with open("/home/whoami/Documents/Hanvon/12种香型白酒/12-2轮复筛-1/20240515/"+file_name, 'r') as f:
+                    lines = f.readlines()
+                    for line in lines:
+                        if f"E{j}\t" in line or f"F{j}\t" in line or f"G{j}\t" in line or f"H{j}\t" in line: 
+                            str2data = extract_floats(line)
+                            str2data = [num for num in str2data if num > 13.0]# 去掉所有个位浮点数
+                            assert np.array(str2data).shape[0] == 70, "The columns must be 70."
+                            all_data += str(str2data)[1:len(str(str2data))-1] + "\n"
+            
         
-    
-    with open("raw_data/test_dataset_3.txt", 'w') as f:
-        f.write(all_data)
+        with open(f"raw_data/train_dataset_{j}.txt", 'w') as f:
+            f.write(all_data)
+        print(f"Success for the {j}!")
 
 if __name__ == '__main__':
-    preprocess_file()
+    extract_from_files()
