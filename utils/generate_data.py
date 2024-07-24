@@ -1,21 +1,18 @@
 import numpy as np
 import sys
+import os
 from sklearn.model_selection import train_test_split
 
-def generate_data():
+def generate_data(n = 1):
 
     # Define the path to your text file
-    input_file_path = 'raw_data/test_dataset_3.txt'
+    input_file_path = f'raw_data/day2_dataset/day2_dataset_{n}.txt'
 
     # Read the file and parse the data into a numpy array
     data = np.loadtxt(input_file_path)
 
-    # Number of rows to select from each set of 4 lines
+    # Number of rows to select
     rows_per_set = 4
-    # Total number of sets
-    num_sets = 16
-    # Number of columns in the dataset
-    num_columns = 51
 
     # Initialize an empty list to store the combinations
     combinations = []
@@ -63,38 +60,43 @@ def generate_data():
                                                                         combinations = np.array(combinations)
 
                                                                         # Define the path to save the npy file
-                                                                        output_file_path = 'raw_data/test_2000_3.npy'
+                                                                        output_file_path = f'raw_data/day2_dataset/test/test_2000_{n}.npy'
 
                                                                         # Save the selected combinations to a npy file
                                                                         np.save(output_file_path, combinations)
 
-                                                                        print(f"Top 10000 combinations successfully saved to '{output_file_path}'")
+                                                                        print(f"Top 2000 combinations successfully saved to '{output_file_path}'")
                                                                         sys.exit()
 
-def generate_labels(n = 1):
-    numbers = np.ones(2000, dtype = int) * 3
-    
-    output_file_path = 'raw_data/labels3.npy'
-    np.save(output_file_path, numbers)
-
-    print(f"np is {np.load(output_file_path)} and shape is {np.load(output_file_path).shape}")
+def generate_labels():
+    data_list = []
+    for i in range(1, 13):
+        numbers = np.ones(2000, dtype = int) * i
+        data_list.append(numbers)
+        # output_file_path = f'raw_data/train_labels_{i}.npy'
+        # np.save(output_file_path, numbers)
+    concate_data = np.concatenate(data_list, axis=0)
+    np.save('raw_data/day2_test_labels_24k.npy', concate_data)
+    print(np.load("raw_data/day2_test_labels_24k.npy").shape)
     
 
 def generate_full_data():
-    X_train1 = np.load("raw_data/test_full_dataset.npy")
-    X_train2 = np.load("raw_data/test_2000_3.npy")
-    X_train = np.concatenate((X_train1, X_train2), axis=0)
+    data_list = []
+    for i in range(1, 13):
+        data_list.append(np.load(f"raw_data/day2_dataset/test/test_2000_{i}.npy"))
+    X_train = np.concatenate(data_list, axis=0)
 
-    output_file_path = 'raw_data/test_full_dataset.npy'
+    output_file_path = 'raw_data/day2_test_dataset_24k.npy'
     np.save(output_file_path, X_train)
 
     print(f"full dataset is {np.load(output_file_path).shape}")
 
 
 def generate_full_labels():
-    X_labels1 = np.load("raw_data/test_full_labels.npy")
-    X_labels2 = np.load("raw_data/labels3.npy")
-    X_labels = np.concatenate((X_labels1, X_labels2), axis=0)
+    data_list = []
+    for i in range(1, 13):
+        data_list.append(np.load(f"raw_data/day2_dataset/test/test_2000_{i}.npy"))
+    X_labels = np.concatenate(data_list, axis=0)
 
     output_file_path = 'raw_data/test_full_labels.npy'
     np.save(output_file_path, X_labels)
@@ -105,8 +107,8 @@ def generate_full_labels():
 def split_train_and_test():
     
     # Load the data from a .npy file
-    data = np.load('raw_data/train_full_dataset.npy')
-    labels = np.load('raw_data/train_full_labels.npy')
+    data = np.load('raw_data/day1_full_dataset_12w.npy')
+    labels = np.load('raw_data/day1_full_labels_12w.npy')
 
     # Define the split ratio
     train_ratio = 0.8  # 80% for training, 20% for validation
@@ -115,14 +117,16 @@ def split_train_and_test():
     train_data, valid_data, train_labels, valid_labels = train_test_split(data, labels, test_size=(1 - train_ratio), random_state=42)
 
     # Save the split datasets and labels
-    np.save('raw_data/day1_train_data.npy', train_data)
-    np.save('raw_data/day1_train_labels.npy', train_labels)
-    np.save('raw_data/day1_valid_data.npy', valid_data)
-    np.save('raw_data/day1_valid_labels.npy', valid_labels)
+    np.save('data/day1_train_data.npy', train_data)
+    np.save('data/day1_train_labels.npy', train_labels)
+    np.save('data/day1_valid_data.npy', valid_data)
+    np.save('data/day1_valid_labels.npy', valid_labels)
 
     print("Training and validation sets, along with their labels, have been created and saved.")
 
 
 if __name__ == '__main__':
-    split_train_and_test()
-    # print(np.load("raw_data/test_full_labels.npy"))
+    pass
+    # split_train_and_test()
+    # path = "data/day1_valid_data.npy"
+    # print(f"Shape of data is {np.load(path).shape}")

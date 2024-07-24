@@ -4,15 +4,16 @@ import re
 
 # selection from [3,6,10,11,12,13,15,17,21,23,24,26,28,29,32,35]
 def preprocess_file():
-    file_path = "raw_data/test_dataset_3.txt"
-    with open(file_path, 'r') as file:
-        content = file.read()
-    
-    content = content.replace(',', '')
+    for i in range(1,13):
+        file_path = f"raw_data/day2_dataset/day2_dataset_{i}.txt"
+        with open(file_path, 'r') as file:
+            content = file.read()
+        
+        content = content.replace(',', '')
 
-    with open(file_path, 'w') as file:
-        file.write(content)
-    print("All commas have been successfully removed.")
+        with open(file_path, 'w') as file:
+            file.write(content)
+        print("All commas have been successfully removed.")
 
 
 def extract_floats(text):
@@ -27,6 +28,20 @@ def extract_floats(text):
     
     return floats
 
+def rename_files():
+    dir_name = "raw_data/day1_dataset/train"
+    for filename in os.listdir(dir_name):
+        
+        if filename.endswith('.txt') and filename.startswith('train_dataset_'):
+            number = filename.split('_')[2].split('.')[0]
+
+            new_filename = f'day1_dataset_{number}.txt'
+            old_file = os.path.join(dir_name, filename)
+            new_file = os.path.join(dir_name, new_filename)
+
+            # Rename the file
+            os.rename(old_file, new_file)
+            print(f'Renamed: {filename} to {new_file}')
 
 def extract_from_files():
     sensors_list = [3,6,10,11,12,13,15,17,21,23,24,26,28,29,32,35]
@@ -35,9 +50,9 @@ def extract_from_files():
         all_data = ""
         # Get for first day
         for i in range(1,19):
-            file_name = f"05152024_12-2ci-{i}_n001.seq1"
+            file_name = f"05162024_12-3ci-{i}_n001.seq1"
             if(i*2 - 1 in sensors_list):
-                with open("/home/whoami/Documents/Hanvon/12种香型白酒/12-2轮复筛-1/20240515/"+file_name, 'r') as f:
+                with open("/home/whoami/Documents/Hanvon/12种香型白酒/12-2轮复筛-2/20240516/"+file_name, 'r') as f:
                     lines = f.readlines()
                     for line in lines:
                         if f"A{j}\t" in line or f"B{j}\t" in line or f"C{j}\t" in line or f"D{j}\t" in line: 
@@ -48,7 +63,7 @@ def extract_from_files():
                             
                             
             if(i*2 in sensors_list):
-                with open("/home/whoami/Documents/Hanvon/12种香型白酒/12-2轮复筛-1/20240515/"+file_name, 'r') as f:
+                with open("/home/whoami/Documents/Hanvon/12种香型白酒/12-2轮复筛-2/20240516/"+file_name, 'r') as f:
                     lines = f.readlines()
                     for line in lines:
                         if f"E{j}\t" in line or f"F{j}\t" in line or f"G{j}\t" in line or f"H{j}\t" in line: 
@@ -58,9 +73,9 @@ def extract_from_files():
                             all_data += str(str2data)[1:len(str(str2data))-1] + "\n"
             
         
-        with open(f"raw_data/train_dataset_{j}.txt", 'w') as f:
+        with open(f"raw_data/day2_dataset/day2_dataset_{j}.txt", 'w') as f:
             f.write(all_data)
         print(f"Success for the {j}!")
 
 if __name__ == '__main__':
-    extract_from_files()
+    preprocess_file()
