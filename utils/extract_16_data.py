@@ -29,13 +29,13 @@ def extract_floats(text):
     return floats
 
 def rename_files():
-    dir_name = "raw_data/day1_dataset/train"
+    dir_name = "raw_data/day4_dataset"
     for filename in os.listdir(dir_name):
         
-        if filename.endswith('.txt') and filename.startswith('train_dataset_'):
+        if filename.endswith('.txt') and filename.startswith('day4_dataset_'):
             number = filename.split('_')[2].split('.')[0]
 
-            new_filename = f'day1_dataset_{number}.txt'
+            new_filename = f'day4_raw_dataset_{number}.txt'
             old_file = os.path.join(dir_name, filename)
             new_file = os.path.join(dir_name, new_filename)
 
@@ -78,4 +78,4 @@ def extract_from_files():
         print(f"Success for the {j}!")
 
 if __name__ == '__main__':
-    preprocess_file()
+    rename_files()
