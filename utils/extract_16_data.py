@@ -5,7 +5,7 @@ import re
 # selection from [3,6,10,11,12,13,15,17,21,23,24,26,28,29,32,35]
 def preprocess_file():
     for i in range(1,13):
-        file_path = f"raw_data/day2_dataset/day2_dataset_{i}.txt"
+        file_path = f"raw_data/day4_dataset/day4_dataset_{i}.txt"
         with open(file_path, 'r') as file:
             content = file.read()
         
@@ -78,4 +78,4 @@ def extract_from_files():
         print(f"Success for the {j}!")
 
 if __name__ == '__main__':
-    extract_from_files()
+    preprocess_file()
