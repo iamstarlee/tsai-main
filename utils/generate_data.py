@@ -55,38 +55,38 @@ def generate_data(n = 1):
                                                                         data[i15]
                                                                     ]
                                                                     combinations.append(combination)
-                                                                    if(numbers == 10000):
+                                                                    if(numbers == 5000):
                                                                         # Convert combinations to a numpy array
                                                                         combinations = np.array(combinations)
 
                                                                         # Define the path to save the npy file
-                                                                        output_file_path = f'raw_data/three_datasets/train/train_10000_{n}.npy'
+                                                                        output_file_path = f'raw_data/three_datasets/train/train_5000_{n}.npy'
 
                                                                         # Save the selected combinations to a npy file
                                                                         np.save(output_file_path, combinations)
 
-                                                                        print(f"Top 10000 combinations successfully saved to '{output_file_path}'")
+                                                                        print(f"Top 5000 combinations successfully saved to '{output_file_path}'")
                                                                         sys.exit()
 
 def generate_labels():
     data_list = []
     for i in range(1, 13):
-        numbers = np.ones(2000, dtype = int) * i
+        numbers = np.ones(5000, dtype = int) * i
         data_list.append(numbers)
         # output_file_path = f'raw_data/train_labels_{i}.npy'
         # np.save(output_file_path, numbers)
     concate_data = np.concatenate(data_list, axis=0)
-    np.save('raw_data/day2_test_labels_24k.npy', concate_data)
-    print(np.load("raw_data/day2_test_labels_24k.npy").shape)
+    np.save('data/train_labels.npy', concate_data)
+    print(np.load("data/train_labels.npy").shape)
     
 
 def generate_full_data():
     data_list = []
     for i in range(1, 13):
-        data_list.append(np.load(f"raw_data/three_datasets/train/train_10000_{i}.npy"))
+        data_list.append(np.load(f"raw_data/three_datasets/train/train_5000_{i}.npy"))
     X_train = np.concatenate(data_list, axis=0)
 
-    output_file_path = 'raw_data/dataset_24k.npy'
+    output_file_path = 'data/train_data.npy'
     np.save(output_file_path, X_train)
 
     print(f"full dataset is {np.load(output_file_path).shape}")
@@ -107,8 +107,8 @@ def generate_full_labels():
 def split_train_and_test():
     
     # Load the data from a .npy file
-    data = np.load('raw_data/dataset_12w.npy')
-    labels = np.load('raw_data/labels_12w.npy')
+    data = np.load('raw_data/dataset_6w.npy')
+    labels = np.load('raw_data/labels_6w.npy')
 
     # Define the split ratio
     train_ratio = 0.8  # 80% for training, 20% for validation
