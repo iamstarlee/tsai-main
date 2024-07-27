@@ -1,72 +1,44 @@
 import numpy as np
 import sys
 import os
+import random
 from sklearn.model_selection import train_test_split
 
-def generate_data(n = 1):
+def generate_data():
+    for n in range(1, 13):
+        # Define the path to your text file
+        input_file_path = f'raw_data_36sensors/day4_dataset/day4_dataset_{n}.txt'
 
-    # Define the path to your text file
-    input_file_path = f'raw_data/three_datasets/train_dataset_{n}.txt'
+        # Read the file and parse the data into a numpy array
+        data = np.loadtxt(input_file_path)
 
-    # Read the file and parse the data into a numpy array
-    data = np.loadtxt(input_file_path)
+        # Number of rows to select
+        rows_per_set = 4
 
-    # Number of rows to select
-    rows_per_set = 12
+        # Initialize an empty list to store the combinations
+        combinations = []
 
-    # Initialize an empty list to store the combinations
-    combinations = []
+        numbers = 0
+        while(numbers <= 2000):
+            numbers += 1
+            combination_index = [random.randint(0, 3) for _ in range(36)]
+            combination = []
+            for i in range(36):
+                combination.append(data[combination_index[i] + i * rows_per_set])
+            combinations.append(combination)
+            if(numbers == 2000):
+                # Convert combinations to a numpy array
+                combinations = np.array(combinations)
 
-    numbers = 0
-    # Nested loops to generate all combinations
-    for i0 in range(0, rows_per_set):
-        for i1 in range(rows_per_set, 2 * rows_per_set):
-            for i2 in range(2 * rows_per_set, 3 * rows_per_set):
-                for i3 in range(3 * rows_per_set, 4 * rows_per_set):
-                    for i4 in range(4 * rows_per_set, 5 * rows_per_set):
-                        for i5 in range(5 * rows_per_set, 6 * rows_per_set):
-                            for i6 in range(6 * rows_per_set, 7 * rows_per_set):
-                                for i7 in range(7 * rows_per_set, 8 * rows_per_set):
-                                    for i8 in range(8 * rows_per_set, 9 * rows_per_set):
-                                        for i9 in range(9 * rows_per_set, 10 * rows_per_set):
-                                            for i10 in range(10 * rows_per_set, 11 * rows_per_set):
-                                                for i11 in range(11 * rows_per_set, 12 * rows_per_set):
-                                                    for i12 in range(12 * rows_per_set, 13 * rows_per_set):
-                                                        for i13 in range(13 * rows_per_set, 14 * rows_per_set):
-                                                            for i14 in range(14 * rows_per_set, 15 * rows_per_set):
-                                                                for i15 in range(15 * rows_per_set, 16 * rows_per_set):
-                                                                    numbers += 1
-                                                                    combination = [
-                                                                        data[i0],
-                                                                        data[i1],
-                                                                        data[i2],
-                                                                        data[i3],
-                                                                        data[i4],
-                                                                        data[i5],
-                                                                        data[i6],
-                                                                        data[i7],
-                                                                        data[i8],
-                                                                        data[i9],
-                                                                        data[i10],
-                                                                        data[i11],
-                                                                        data[i12],
-                                                                        data[i13],
-                                                                        data[i14],
-                                                                        data[i15]
-                                                                    ]
-                                                                    combinations.append(combination)
-                                                                    if(numbers == 5000):
-                                                                        # Convert combinations to a numpy array
-                                                                        combinations = np.array(combinations)
+                # Define the path to save the npy file
+                output_file_path = f'raw_data_36sensors/three_dataset/test_from_day4/test_2000_{n}.npy'
+                
+                # Save the selected combinations to a npy file
+                np.save(output_file_path, combinations)
 
-                                                                        # Define the path to save the npy file
-                                                                        output_file_path = f'raw_data/three_datasets/train/train_5000_{n}.npy'
+                print(f"Top 2000 combinations successfully saved to '{output_file_path}'")
+                break
 
-                                                                        # Save the selected combinations to a npy file
-                                                                        np.save(output_file_path, combinations)
-
-                                                                        print(f"Top 5000 combinations successfully saved to '{output_file_path}'")
-                                                                        sys.exit()
 
 def generate_labels():
     data_list = []
@@ -83,10 +55,10 @@ def generate_labels():
 def generate_full_data():
     data_list = []
     for i in range(1, 13):
-        data_list.append(np.load(f"raw_data/three_datasets/train/train_5000_{i}.npy"))
+        data_list.append(np.load(f"raw_data_36sensors/three_dataset/train/train_10000_{i}.npy"))
     X_train = np.concatenate(data_list, axis=0)
 
-    output_file_path = 'data/train_data.npy'
+    output_file_path = 'raw_data_36sensors/full_train_data.npy'
     np.save(output_file_path, X_train)
 
     print(f"full dataset is {np.load(output_file_path).shape}")
@@ -107,8 +79,8 @@ def generate_full_labels():
 def split_train_and_test():
     
     # Load the data from a .npy file
-    data = np.load('raw_data/dataset_12w.npy')
-    labels = np.load('raw_data/labels_12w.npy')
+    data = np.load('raw_data_36sensors/full_train_data.npy')
+    labels = np.load('raw_data_36sensors/labels_12w.npy')
 
     # Define the split ratio
     train_ratio = 0.8  # 80% for training, 20% for validation
@@ -126,4 +98,4 @@ def split_train_and_test():
 
 
 if __name__ == '__main__':
-    split_train_and_test()
+    generate_data()
