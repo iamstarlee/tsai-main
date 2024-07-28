@@ -55,10 +55,10 @@ def generate_labels():
 def generate_full_data():
     data_list = []
     for i in range(1, 13):
-        data_list.append(np.load(f"raw_data_36sensors/three_dataset/train/train_10000_{i}.npy"))
+        data_list.append(np.load(f"raw_data_36sensors/three_dataset/test_from_day4/test_2000_{i}.npy"))
     X_train = np.concatenate(data_list, axis=0)
 
-    output_file_path = 'raw_data_36sensors/full_train_data.npy'
+    output_file_path = 'raw_data_36sensors/full_test_data.npy'
     np.save(output_file_path, X_train)
 
     print(f"full dataset is {np.load(output_file_path).shape}")
@@ -98,4 +98,4 @@ def split_train_and_test():
 
 
 if __name__ == '__main__':
-    generate_data()
+    generate_full_data()
