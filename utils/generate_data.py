@@ -107,8 +107,8 @@ def generate_full_labels():
 def split_train_and_test():
     
     # Load the data from a .npy file
-    data = np.load('raw_data/dataset_6w.npy')
-    labels = np.load('raw_data/labels_6w.npy')
+    data = np.load('raw_data/dataset_12w.npy')
+    labels = np.load('raw_data/labels_12w.npy')
 
     # Define the split ratio
     train_ratio = 0.8  # 80% for training, 20% for validation

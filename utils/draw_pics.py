@@ -38,10 +38,10 @@ if __name__ == '__main__':
         # Read the x-coordinates from the first file
         x_coordinates = np.loadtxt(x_file_path)
 
-        y_file_path = 'raw_data/y.txt'
+        y_file_path = '/home/whoami/Downloads/train_10000_1.npy'
         # Read the 16 sets of y-coordinates from the second file
         # y_coordinates = np.load(y_file_path)[99]
-        y_coordinates = np.loadtxt(y_file_path)
+        y_coordinates = np.load(y_file_path)[0]
         print(f"y-axis shape is {y_coordinates.shape}, and x-axis shape is {x_coordinates.shape}")
         
 
