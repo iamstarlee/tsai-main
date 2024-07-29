@@ -18,7 +18,7 @@ def extract_floats(text):
 
 if __name__ == '__main__':
     # Define the paths to your text files
-    x_file_path = 'raw_data/x.txt'
+    x_file_path = 'raw_data_36sensors/x.txt'
     custom = False
     
     if custom:
@@ -38,7 +38,11 @@ if __name__ == '__main__':
         # Read the x-coordinates from the first file
         x_coordinates = np.loadtxt(x_file_path)
 
+<<<<<<< HEAD
         y_file_path = '/home/whoami/Downloads/train_10000_1.npy'
+=======
+        y_file_path = 'raw_data_36sensors/y.txt'
+>>>>>>> refs/remotes/origin/main
         # Read the 16 sets of y-coordinates from the second file
         # y_coordinates = np.load(y_file_path)[99]
         y_coordinates = np.load(y_file_path)[0]

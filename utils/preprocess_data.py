@@ -103,7 +103,7 @@ def build_multiple_files():
     # Loop to create each file
     for i in range(1, num_files + 1):
         # Define the filename
-        filename = f'raw_data/three_datasets/train_dataset_{i}.txt'
+        filename = f'/data/lxx/code/tsai-main/raw_data_36sensors/three_dataset/raw_dataset_{i}.txt'
         
         # Open the file in write mode to create an empty file
         with open(filename, 'w') as file:
@@ -117,10 +117,10 @@ def build_multiple_files():
 def extract_three_datasets():
     for i in range(1, 13):
         # List of input file names
-        input_files = [f'raw_data/day1_dataset/day1_dataset_{i}.txt', f'raw_data/day2_dataset/day2_dataset_{i}.txt', f'raw_data/day3_dataset/day3_dataset_{i}.txt']
+        input_files = [f'raw_data_36sensors/day1_dataset/day1_dataset_{i}.txt', f'raw_data_36sensors/day2_dataset/day2_dataset_{i}.txt', f'raw_data_36sensors/day3_dataset/day3_dataset_{i}.txt']
 
         # Output file name
-        output_file = f'raw_data/three_datasets/train_dataset_{i}.txt'
+        output_file = f'raw_data_36sensors/three_dataset/raw_dataset_{i}.txt'
 
         # Open output file for writing
         with open(output_file, 'w') as outfile:
@@ -134,9 +134,9 @@ def extract_three_datasets():
             with open(input_files[2], 'r') as f2:
                 lines2 = f2.readlines()
 
-            assert len(lines0) == 64 and len(lines1) == 64 and len(lines2) == 64, "Wrong lines"
+            assert len(lines0) == 144 and len(lines1) == 144 and len(lines2) == 144, "Wrong lines"
 
-            for i in range(0, 64, 4):
+            for i in range(0, 144, 4):
                 chunk0 = lines0[i:i+4]
                 chunk1 = lines1[i:i+4]
                 chunk2 = lines2[i:i+4]
